@@ -1,0 +1,27 @@
+ .cardDiv{
+    display: inline-table;
+     padding: 2rem;
+    height: 10rem;
+    width: 18rem;
+     background-color: aqua;
+    font-size: larger;
+    
+    margin: 2rem;
+    border-radius: 20px; 
+     box-shadow:gray ; 
+    
+    
+} 
+
+.cardDiv:hover{
+    transform: scale(1.1);
+    box-shadow: 5px 10px gray;
+}
+.card{
+  
+    margin-top: 4rem;
+    text-align: center;
+     /* display: grid;
+     grid-template-columns: 1fr 1fr 1fr 1fr; */
+    
+}

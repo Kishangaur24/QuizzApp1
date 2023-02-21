@@ -1,0 +1,44 @@
+.form{
+   z-index: 9000;
+   height: 90vh;
+    /* border-radius: 15px; */
+    /* border: 1px red solid; */
+    width: 45rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+    align-items: center;
+    /* padding: 2rem; */
+    background-size: cover;
+    box-shadow: 0px 0px 6px 4px;
+    background-image: url("https://media.istockphoto.com/id/494094966/vector/question-mark-3d-seamless-wallpaper-pattern.jpg?s=612x612&w=0&k=20&c=u56aWdaxkF1T4k745zLP3egh7scxb4FjwaNpZpiLA44=");
+}
+.input{
+    margin-top: 4rem;
+    width: 25rem;
+    height: 3rem;
+    border-radius: 15px;
+    border: 1px black solid;
+    outline: none;
+    padding: 1rem 1rem 1rem 1rem;
+    font-weight: 700;
+    font-size: larger;
+}
+.select{
+    width: 25rem;
+    height: 3rem;
+    border-radius: 15px;
+     padding: 0rem 1rem 0rem 1rem;
+     font-weight: 700;
+     font-size: larger;
+}
+.btn{
+    height: 3rem;
+    width: 6rem;
+    border-radius: 10px;
+    border: none;
+    padding: 0.5rem;
+    background-color: rgb(24, 120, 146);
+    color: aliceblue;
+    box-shadow: 0px 0px 3px 1px black;
+}
