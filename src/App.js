@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Header from './Component/Header/Header';
 import Quizz from './Component/Quizz/Quizz';
@@ -8,6 +8,7 @@ import QuizzResult from './Component/QUizzResult/QuizzResult';
 import HomePage from './HomePage/HomePage';
 
 function App() {
+
   return (
     <div>
       <BrowserRouter>

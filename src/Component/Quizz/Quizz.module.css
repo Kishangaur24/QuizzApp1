@@ -1,46 +1,92 @@
-.App {
-    text-align: center;
-  }
-  .questionCard{
-    margin: 0 auto;
-    background-color: gray;
-    padding: 16px;
-    color: white;
-    border-radius: 20px;
-    width: 80%;
-    height: auto;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.header{
+  width: 60rem;
+}
+
+.container{
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-image: url("https://play-lh.googleusercontent.com/2o1sU5tSQ-tPNENcMmBE5XQGtmJUB5QDQn1hSj-iRjmFVovxagYinLt0_R_si6AYNK_G");
+  background-size: cover;
+}
+.form{
   
-  }
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1rem;
+  background-color: aliceblue;
+  opacity: 0.9;
+  border-radius: 20px;
+  box-shadow: 1px 1px 6px 3px;
+}
+.option{
+  font-size: large;
+  display: flex;
+  margin-top: 2rem;
   
-  ul{
-    list-style: none;
-  }
-  li{
-    padding: 16px;
-    border-radius: 20px;
-    background-color: darkgray;
-    margin-bottom: 7px;
-    font-size: large;
-  }
-  .finalResult{
-    margin: 0 auto;
-    background-color: gray;
-    padding: 16px;
-    color: white;
-    border-radius: 20px;
-    width: 50%;
-    height: auto;
   
-  }
-  /* button{
-    background-color: red;
-    border: none;
-    color: white;
-    padding: 16px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 24px;
-  } */
+
+}
+.option li{
+  height: 3rem;
+  margin: 2rem;
+  width: 28.5rem;
+  padding: 2rem;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  background-color: rgb(182, 228, 232);
+  box-shadow: 1px 1px 6px 3px;
+  font-size: x-large;
+  font-weight: 900;
+  
+
+
+}
+.option li:hover{
+  background-color: blue;
+}
+.btn button{
+   height: 3rem;
+   width: 6rem;
+   border-radius: 15px;
+   box-shadow: 1px 1px 6px 3px black;
+   border: none;
+   background-color: rgb(163, 238, 173);
+   font-size: large;
+   text-transform: capitalize;
+   font-weight: 700;
+   
+}
+.btn{
+
+  width: 60rem;
+  display: flex;
+  justify-content: space-between;
+}
+.btn1:hover{
+  background-color: red;
+}
+.btn2:hover{
+  background-color: green;
+}
+.score{
+  position: absolute;
+  z-index: 9000;
+  margin-left: 85rem;
+  margin-bottom: 35rem;
+  background-color: azure;
+  opacity: 0.9;
+  padding: 1rem;
+  border-radius: 15px;
+}

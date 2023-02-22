@@ -1,126 +1,110 @@
-import React, {useState} from 'react';
-import { useParams } from 'react-router-dom';
-import style from './Quizz.module.css';
-//import questions from './const'
+import{useState} from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from "recoil";
+import { Api } from "../../Atom/Atom";
+import style from "./Quizz.module.css";
+
 
 function Quizz() {
+  const data = useRecoilValue(Api);
+ // console.log(data);
+ const[Question, setQuestion]=useState([data])
+ const[next, setNext]= useState(0)
+ const[score,setScore]=useState(0)
+ const navigate=useNavigate()
 
-
-  const id1= useParams()
-  console.log(id1)
-
-// const data = questions
-// console.log(data)
-  const[showFinalResult, setShowFinalResult] = useState(false)
-  const [score, setScore]= useState(0)
-  const[currentQuestion, setCurrentQuestion]= useState(0)
-
-  // Helper function
-  function optionClicked(isCorrect){
-  // console.log(isCorrect)
-  if(isCorrect){
-    setScore(score+1)
-  }
-  if(currentQuestion+1 < questions.length){
-    setCurrentQuestion(currentQuestion+1)
+ function handleNext(){
+  if(next<9){
+    setNext(next+1)
   }else{
-    setShowFinalResult(true)
+    setNext(9)
   }
- 
+  
+  
+ }
+ function handlePrevious(){
+  if(next>0){
+    setNext(next-1)
+  }else{
+    setNext(0)
   }
+ }
 
-  // restart function
-  function restartGame(){
-    setScore(0)
-    setCurrentQuestion(0)
-    setShowFinalResult(false)
+ function handleCorrectAnswer4(){
+  
+   if(next<9){
+    setNext(next+1)
+    setScore(score+1)
+  }else{
+    setNext(9)
+    setScore(score+1)
+    navigate("/Result")
+
   }
+ }
+ function handleCorrectAnswer3(){
+   alert("Your selected answer is wrong")
+   if(next<9){
+    setNext(next+1)
+  }else{
+    setNext(9)
+    navigate("/Result")
 
-  const questions = [
-    {
-      text: "What is the capital of India?",
-      options: [
-        { id: 0, text: "Mumbai", isCorrect: false },
-        { id: 1, text: "Kolkata", isCorrect: false },
-        { id: 2, text: "Lucknow", isCorrect: false },
-        { id: 3, text: "New Delhi", isCorrect: true },
-      ],
-    },
-    {
-      text: "who was the first Prime minister of India? ",
-      options: [
-        { id: 0, text: "Jawahar Lal Nehru", isCorrect: true },
-        { id: 1, text: "Lal Bahadur Shastri", isCorrect: false },
-        { id: 2, text: "Rajendra Prasad", isCorrect: false },
-        { id: 3, text: "Dr bhim rav Ambedkar", isCorrect: false },
-      ],
-    },
-    {
-      text: "Who was the second president of the India?",
-      options: [
-        { id: 0, text: "SarvePalli RadharKrishnan", isCorrect: true },
-        { id: 1, text: "Rajendra prasad", isCorrect: false },
-        { id: 2, text: "Ambedkar", isCorrect: false },
-        { id: 3, text: "Lal Bahadur Shastri", isCorrect: false },
-      ],
-    },
-    {
-      text: "What is react?",
-      options: [
-        { id: 0, text: "JavaScript frameWork", isCorrect: false },
-        { id: 1, text: "JavaScript Library", isCorrect: true },
-        { id: 2, text: "Java Library", isCorrect: false },
-        { id: 3, text: "Java frameWork", isCorrect: false },
-      ],
-    },
-    {
-      text: "Longest River in the world?",
-      options: [
-        { id: 0, text: "Amazon River", isCorrect: false },
-        { id: 1, text: "Nile River", isCorrect: true },
-        { id: 2, text: "Yellow River", isCorrect: true },
-        { id: 3, text: "Congo River", isCorrect: false },
-      ],
-    },
-  ];
+  }
+ }
+ function handleCorrectAnswer2(){
+   alert("Your selected answer is wrong")
+   if(next<9){
+    setNext(next+1)
+  }else{
+    setNext(9)
+    navigate("/Result")
 
-  return (
-    <>
-    <div className={style.App}>
-     <h1>React Quiz</h1>
-     <h2>Current Score:{score}</h2>
+  }
+ }
+ function handleCorrectAnswer1(){
+   alert("Your selected answer is wrong")
+   if(next<9){
+    setNext(next+1)
+  }else{
+    setNext(9)
+    navigate("/Result")
 
-
-    {showFinalResult ?(
+  }
+ }
+  return(
+  
     
-    <div className={style.finalResult}>
-    <h1>Final Result</h1>
-    <h2>{score} out of {questions.length} correct -({(score/questions.length)*100}%)
-     </h2>
-     <button className={style.btn} onClick={restartGame}>Restart Game</button>
-   </div>
-     ) : (
-    <div className={style.questionCard}>
-    <h2>Question {currentQuestion+1} out of {questions.length}</h2>
-  <h3 className={style.question}>{questions[currentQuestion].text}</h3>
-  <ul>
-  {
-    questions[currentQuestion].options.map((option)=>{
-      return(
-        <li onClick={()=>optionClicked(option.isCorrect)} key={option.id}>{option.text}</li>
-      )
-    })
-  }
-  </ul>
-  </div>
-
-   ) }
-
+    <div className={style.container}>
+     <div className={style.score}><h1>Score:{score}</h1></div>
    
-   
+      {
+        
+        Question.map((item)=>
+      
+        <div className={style.form}>
+        <div className={style.header}>  <h1>{item.results[next].question}</h1></div>
+          <div className={style.option}>
+            <div>
+          <li onClick={handleCorrectAnswer1}>1.{item.results[next].incorrect_answers[0]}</li>
+          <li onClick={handleCorrectAnswer2}>2.{item.results[next].incorrect_answers[1]}</li>
+          </div>
+          <div>
+          <li onClick={handleCorrectAnswer3}>3.{item.results[next].incorrect_answers[2]}</li>
+          <li onClick={handleCorrectAnswer4}>4.{item.results[next].correct_answer}</li>
+          </div>
+         
+          </div >
+         <div className={style.btn}>
+          <button className={style.btn1} onClick={handlePrevious}>previous</button>
+          <button className={style.btn2} onClick={handleNext}>next</button>
+          </div>
+        </div>
+      )}
+      
     </div>
-    </>
-  );
-}
+  ) 
 
+  
+}
 export default Quizz;
