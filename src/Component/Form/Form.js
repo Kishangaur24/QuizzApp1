@@ -9,7 +9,8 @@ function Form() {
   if (localStorage.getItem("userData") === null) {
     initial = [];
   } else {
-    initial = JSON.parse(localStorage.getItem("userData"));
+    initial = [JSON.parse(localStorage.getItem("userData"))];
+    console.log(initial,"initial")
   }
 
   const setApi = useSetRecoilState(Api);
@@ -40,12 +41,14 @@ function Form() {
 
     const data = await response.json();
     setApi(data);
-    setUserData([ userData.unshift(newData),...userData ]);
-   // console.log(userData);
+    //console.log(userData,"user..")
+    setUserData({...newData, ...userData} );
+
+    
     localStorage.setItem("userData", JSON.stringify(userData));
     navigate("/Quizz");
   }
-
+  console.log(userData,"userNew");
   return (
     <div className={style.main}>
       <form className={style.form}>
@@ -63,9 +66,9 @@ function Form() {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            {option.map((item) => (
+            {option.map((item,index) => (
               <>
-                <option value={item?.value} key={item.value}>
+                <option value={item?.value} key={index}>
                   {item.category}
                 </option>
               </>

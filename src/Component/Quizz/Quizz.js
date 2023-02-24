@@ -5,10 +5,12 @@ import { Api, QuizResult } from "../../Atom/Atom";
 import style from "./Quizz.module.css";
 
 function Quizz() {
+  // Going to infinitive loop
   const data = useRecoilValue(Api);
   const setResult = useSetRecoilState(QuizResult);
-  // console.log(data);
+   console.log(data,"ussrdata");
   const [Question, setQuestion] = useState([data]);
+  //console.log(Question)
   const [next, setNext] = useState(0);
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(15);
@@ -20,7 +22,9 @@ function Quizz() {
     } else {
       setNext(9);
     }
+    console.log(next);
   }
+
   function handlePrevious() {
     if (next > 0) {
       setNext(next - 1);
@@ -31,13 +35,14 @@ function Quizz() {
 
   function handleCorrectAnswer4() {
     if (next < 9) {
-      setNext(next + 1);
+    
+      next===9?setNext(next):setNext(next+1)
       setScore(score + 1);
-    } else {
-      setNext(9);
-      console.log(score, "result score");
+    }
+     else {
       setResult(score);
-      navigate("/Result");
+      console.log(score, "result score");
+       navigate("/Result");
     }
   }
   function handleCorrectAnswer3() {
@@ -93,8 +98,8 @@ function Quizz() {
         {timer}
       </div>
 
-      {Question.map((item) => (
-        <div className={style.form}>
+      {Question.map((item, index) => (
+        <div className={style.form} key={index}>
           <div className={style.header}>
             {" "}
             <h1>{item.results[next].question}</h1>
