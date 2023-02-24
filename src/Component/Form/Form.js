@@ -5,14 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { Api } from "../../Atom/Atom";
 import { useSetRecoilState } from "recoil";
 function Form() {
-  let initial;
-  if (localStorage.getItem("userData") === null) {
-    initial = [];
-  } else {
-    initial = [JSON.parse(localStorage.getItem("userData"))];
-    console.log(initial,"initial")
-  }
-
   const setApi = useSetRecoilState(Api);
   const [option, setOption] = useState(Categories);
 //  console.log(Categories)
@@ -20,13 +12,14 @@ function Form() {
   const [category, setCategory] = useState(0);
   const [difficulty, setDifficulty] = useState("");
 
-  const [userData, setUserData] = useState(initial);
+  //const [userData, setUserData] = useState(initial);
+  const userData = JSON.parse(localStorage.getItem("userData") || "[]")
   const newData = {
     name: name,
     category: category,
     difficulty: difficulty,
   };
-  //console.log(newData, "dfdfh");
+  console.log(newData, "dfdfh");
 
   const navigate = useNavigate();
   async function handleSubmit(e) {
@@ -38,17 +31,13 @@ function Form() {
     const response = await fetch(
       `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`
     );
-
     const data = await response.json();
     setApi(data);
-    //console.log(userData,"user..")
-    setUserData({...newData, ...userData} );
-
-    
+    userData.unshift(newData)
     localStorage.setItem("userData", JSON.stringify(userData));
     navigate("/Quizz");
   }
-  console.log(userData,"userNew");
+  //console.log(userData,"userNew");
   return (
     <div className={style.main}>
       <form className={style.form}>

@@ -8,7 +8,7 @@ function Quizz() {
   // Going to infinitive loop
   const data = useRecoilValue(Api);
   const setResult = useSetRecoilState(QuizResult);
-   console.log(data,"ussrdata");
+  // console.log(data,"ussrdata");
   const [Question, setQuestion] = useState([data]);
   //console.log(Question)
   const [next, setNext] = useState(0);
