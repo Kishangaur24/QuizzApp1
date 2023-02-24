@@ -9,16 +9,18 @@
 
 .container{
   height: 90vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-image: url("https://play-lh.googleusercontent.com/2o1sU5tSQ-tPNENcMmBE5XQGtmJUB5QDQn1hSj-iRjmFVovxagYinLt0_R_si6AYNK_G");
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 36%, rgba(0,212,255,1) 100%);
+
   background-size: cover;
 }
 .form{
   
-  padding: 3rem;
+  
   display: flex;
   flex-direction: column;
   align-items: center;

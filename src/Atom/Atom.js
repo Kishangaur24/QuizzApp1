@@ -3,3 +3,8 @@ export const Api=atom({
     key:"api",
     default:null
 })
+
+export const QuizResult=atom({
+    key:"Result",
+    default:null
+})

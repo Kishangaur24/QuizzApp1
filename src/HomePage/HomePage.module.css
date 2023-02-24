@@ -1,14 +1,17 @@
 .container{
-    background-size: cover; 
-    background-image: url("https://play-lh.googleusercontent.com/2o1sU5tSQ-tPNENcMmBE5XQGtmJUB5QDQn1hSj-iRjmFVovxagYinLt0_R_si6AYNK_G");
-    display: flex;
+    background-size: cover;
+    /* background-image: url("https://t4.ftcdn.net/jpg/04/39/13/37/360_F_439133763_FrLdhZsd5aGC23r9ATARuKJBr8ifZjIe.jpg"); */
+    /* display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 36%, rgba(0,212,255,1) 100%);
+
+    background-repeat: none;
+    width: auto;
 }
-.img{
-    height: 37rem;
-    width: 51rem;
-    box-shadow: 0px 0px 6px 3px ;
 
-
+@media screen and(max-width:760px) {
+    .container{
+        background-size: cover;
+    }
 }

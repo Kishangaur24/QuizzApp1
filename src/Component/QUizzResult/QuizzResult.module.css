@@ -1,0 +1,40 @@
+.mainContainer{
+    display: flex;
+    height: 90vh;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 6rem;
+    row-gap: 2rem;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 36%, rgba(0,212,255,1) 100%);
+
+    background-size: cover;
+  
+}
+.mainContainer h2{
+    font-size: 1.5rem;
+}
+
+.Result{
+    height: 25rem;
+    width: 45rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: aliceblue;
+    opacity: 0.9;
+    border-radius: 20px;
+    box-shadow: 1px 1px 6px 3px;
+    row-gap: 3rem;
+    
+    
+
+}
+.btn button{
+   border: 2px red solid;
+   padding: 1rem;
+   background-color: red;
+   font-size: larger;
+   border-radius: 15px;
+}
