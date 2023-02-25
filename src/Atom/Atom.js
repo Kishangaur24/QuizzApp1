@@ -8,3 +8,7 @@ export const QuizResult=atom({
     key:"Result",
     default:null
 })
+export const UserRanking=atom({
+    key:"Rank",
+    default:[]
+})

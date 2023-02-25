@@ -95,9 +95,8 @@ function Quizz() {
     <div className={style.container}>
       <div className={style.score}>
         <h1>Score:{score}</h1>
-        {timer}
       </div>
-
+      <div className={style.timer}><h1>{timer} </h1></div>
       {Question.map((item, index) => (
         <div className={style.form} key={index}>
           <div className={style.header}>

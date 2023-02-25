@@ -19,7 +19,7 @@ function Form() {
     category: category,
     difficulty: difficulty,
   };
-  console.log(newData, "dfdfh");
+ // console.log(newData, "dfdfh");
 
   const navigate = useNavigate();
   async function handleSubmit(e) {
