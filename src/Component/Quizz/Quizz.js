@@ -7,130 +7,101 @@ import style from "./Quizz.module.css";
 function Quizz() {
   // Going to infinitive loop
   const data = useRecoilValue(Api);
+  const [quizzes, setQuizzes] = useState([]);
+  const [correctAns, setCorrectAns] = useState("");
   const setResult = useSetRecoilState(QuizResult);
-  // console.log(data,"ussrdata");
-  const [Question, setQuestion] = useState([data]);
-  //console.log(Question)
   const [next, setNext] = useState(0);
   const [score, setScore] = useState(0);
-  const [timer, setTimer] = useState(15);
-  const navigate = useNavigate();
+  // const [timer, setTimer] = useState(15);
+
+  console.log(score);
+
+  //Using the Fisher-Yates algorithm
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  useEffect(() => {
+    if (data?.length) {
+      const correct_answer = data[next]?.correct_answer;
+      setCorrectAns(correct_answer);
+      const incorrect_answers = data[next]?.incorrect_answers;
+      const allAnswers = [correct_answer, ...incorrect_answers];
+      const shuffledAnswers = shuffleArray(allAnswers);
+      setQuizzes(shuffledAnswers);
+    }
+  }, [data, next]);
 
   function handleNext() {
     if (next < 9) {
-      setNext(next + 1);
-    } else {
-      setNext(9);
+      setNext((prev) => prev + 1);
     }
-    console.log(next);
   }
 
   function handlePrevious() {
     if (next > 0) {
-      setNext(next - 1);
-    } else {
-      setNext(0);
+      setNext((prev) => prev - 1);
     }
   }
 
-  function handleCorrectAnswer4() {
-    if (next < 9) {
-    
-      next===9?setNext(next):setNext(next+1)
-      setScore(score + 1);
-    }
-     else {
-      setResult(score);
-      console.log(score, "result score");
-       navigate("/Result");
-    }
-  }
-  function handleCorrectAnswer3() {
-    alert("Your selected answer is wrong");
-    if (next < 9) {
-      setNext(next + 1);
-    } else {
-      setNext(9);
-      console.log(score, "result score");
-      setResult(score);
-      navigate("/Result");
-    }
-  }
-  function handleCorrectAnswer2() {
-    alert("Your selected answer is wrong");
-    if (next < 9) {
-      setNext(next + 1);
-    } else {
-      setNext(9);
-      console.log(score, "result score");
-      setResult(score);
-      navigate("/Result");
-    }
-  }
-  function handleCorrectAnswer1() {
-    alert("Your selected answer is wrong");
-    if (next < 9) {
-      setNext(next + 1);
-    } else {
-      setNext(9);
-      console.log(score, "result score");
-      setResult(score);
-      navigate("/Result");
+  function handleQuiz(ans, correctAns) {
+    if (correctAns === ans) {
+      setScore((prev) => prev + 1);
     }
   }
 
-  useEffect(() => {
-    let time = setInterval(Timer, 1000);
-    function Timer() {
-      setTimer(timer - 1);
-      if (timer === 0) {
-        setTimer(15);
-        handleNext();
-      }
-    }
-    return () => clearInterval(time);
-  });
+  // useEffect(() => {
+  //   let time = setInterval(Timer, 1000);
+  //   function Timer() {
+  //     setTimer(timer - 1);
+  //     if (timer === 0) {
+  //       setTimer(15);
+  //       handleNext();
+  //     }
+  //   }
+  //   return () => clearInterval(time);
+  // });
 
   return (
     <div className={style.container}>
       <div className={style.score}>
         <h1>Score:{score}</h1>
       </div>
-      <div className={style.timer}><h1>{timer} </h1></div>
-      {Question.map((item, index) => (
-        <div className={style.form} key={index}>
-          <div className={style.header}>
-            {" "}
-            <h1>{item.results[next].question}</h1>
-          </div>
-          <div className={style.option}>
-            <div>
-              <li onClick={handleCorrectAnswer1}>
-                1.{item.results[next].incorrect_answers[0]}
-              </li>
-              <li onClick={handleCorrectAnswer2}>
-                2.{item.results[next].incorrect_answers[1]}
-              </li>
-            </div>
-            <div>
-              <li onClick={handleCorrectAnswer3}>
-                3.{item.results[next].incorrect_answers[2]}
-              </li>
-              <li onClick={handleCorrectAnswer4}>
-                4.{item.results[next].correct_answer}
-              </li>
-            </div>
-          </div>
-          <div className={style.btn}>
+      {/* <div className={style.timer}>
+        <h1>{timer} </h1>
+      </div> */}
+      <div className={style.form}>
+        <div className={style.header}>
+          {" "}
+          <h1>{data[next]?.question}</h1>
+          Correct ans - {correctAns}
+        </div>
+        <div className={style.option}>
+          {quizzes?.map((answer) => (
+            <li key={answer} onClick={() => handleQuiz(answer, correctAns)}>
+              {answer}
+            </li>
+          ))}
+        </div>
+
+        <div className={style.btn}>
+          {next > 0 ? (
             <button className={style.btn1} onClick={handlePrevious}>
               previous
             </button>
+          ) : null}
+
+          {next < 9 ? (
             <button className={style.btn2} onClick={handleNext}>
               next
             </button>
-          </div>
+          ) : null}
         </div>
-      ))}
+      </div>
     </div>
   );
 }

@@ -1,25 +1,27 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-.header{
+
+.header {
   width: 60rem;
 }
 
-.container{
+.container {
   height: 90vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 36%, rgba(0,212,255,1) 100%);
+  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 36%, rgba(0, 212, 255, 1) 100%);
 
   background-size: cover;
 }
-.form{
-  
+
+.form {
+
   padding: 3rem;
   display: flex;
   flex-direction: column;
@@ -30,15 +32,15 @@
   border-radius: 20px;
   box-shadow: 1px 1px 6px 3px;
 }
-.option{
-  font-size: large;
-  display: flex;
-  margin-top: 2rem;
-  
-  
 
+.option {
+  font-size: large;
+  display: grid;
+  grid-template-columns: auto auto;
+  margin-top: 2rem;
 }
-.option li{
+
+.option li {
   height: 3rem;
   margin: 2rem;
   width: 28.5rem;
@@ -51,38 +53,46 @@
   box-shadow: 1px 1px 6px 3px;
   font-size: x-large;
   font-weight: 900;
-  
+
 
 
 }
-.option li:hover{
+
+.option li:hover {
   background-color: blue;
+  color: white;
+  cursor: pointer;
 }
-.btn button{
-   height: 3rem;
-   width: 6rem;
-   border-radius: 15px;
-   box-shadow: 1px 1px 6px 3px black;
-   border: none;
-   background-color: rgb(163, 238, 173);
-   font-size: large;
-   text-transform: capitalize;
-   font-weight: 700;
-   
-}
-.btn{
 
+.btn button {
+  height: 3rem;
+  width: 6rem;
+  margin: 0 30px;
+  border-radius: 15px;
+  box-shadow: 1px 1px 6px 3px black;
+  border: none;
+  background-color: rgb(163, 238, 173);
+  font-size: large;
+  text-transform: capitalize;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn {
   width: 60rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
-.btn1:hover{
-  background-color: red;
+
+.btn1:hover {
+  background-color: rgba(255, 0, 0, 0.599);
 }
-.btn2:hover{
-  background-color: green;
+
+.btn2:hover {
+  background-color: rgba(0, 128, 0, 0.61);
 }
-.score{
+
+.score {
   position: absolute;
   z-index: 9000;
   margin-left: 85rem;
@@ -92,6 +102,7 @@
   padding: 1rem;
   border-radius: 15px;
 }
+
 .timer {
   background-color: white;
   border-radius: 100px;

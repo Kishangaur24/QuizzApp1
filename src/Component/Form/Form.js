@@ -6,34 +6,32 @@ import { Api } from "../../Atom/Atom";
 import { useSetRecoilState } from "recoil";
 function Form() {
   const setApi = useSetRecoilState(Api);
-  const [option, setOption] = useState(Categories);
-//  console.log(Categories)
+  const [option] = useState(Categories);
   const [name, setName] = useState("");
   const [category, setCategory] = useState(0);
   const [difficulty, setDifficulty] = useState("");
 
   //const [userData, setUserData] = useState(initial);
-  const userData = JSON.parse(localStorage.getItem("userData") || "[]")
+  const userData = JSON.parse(localStorage.getItem("userData") || "[]");
   const newData = {
     name: name,
     category: category,
     difficulty: difficulty,
   };
- // console.log(newData, "dfdfh");
 
   const navigate = useNavigate();
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (name === "") {
       alert("Please first fill all the required field.");
       return;
     }
-    const response = await fetch(
-      `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`
-    );
+    const uri = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
+    const response = await fetch(uri);
     const data = await response.json();
-    setApi(data);
-    userData.unshift(newData)
+    setApi(data?.results);
+    userData.unshift(newData);
     localStorage.setItem("userData", JSON.stringify(userData));
     navigate("/Quizz");
   }
@@ -55,12 +53,10 @@ function Form() {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            {option.map((item,index) => (
-              <>
-                <option value={item?.value} key={index}>
-                  {item.category}
-                </option>
-              </>
+            {option.map((item, index) => (
+              <option value={item?.value} key={index}>
+                {item.category}
+              </option>
             ))}
           </select>
         </div>
