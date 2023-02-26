@@ -101,7 +101,7 @@ function Quizz() {
         <div className={style.form} key={index}>
           <div className={style.header}>
             {" "}
-            <h1>{item.results[next].question}</h1>
+            <h1>Question{next+1}: {item.results[next].question}</h1>
           </div>
           <div className={style.option}>
             <div>
