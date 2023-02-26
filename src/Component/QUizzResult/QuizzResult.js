@@ -46,7 +46,7 @@ const QuizzResult = (e) => {
 
           <div className={style.btn}>
             <button onClick={handleRestart}>Restart Quizz</button>
-            <button onClick={getRank}>getRank</button>
+            <button onClick={getRank}>See Your Rank</button>
           </div>
         </div>
       </div>
