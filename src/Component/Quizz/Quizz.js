@@ -6,23 +6,12 @@ import style from "./Quizz.module.css";
 
 function Quizz() {
   const navigate=useNavigate()
-  // Going to infinitive loop
   const data = useRecoilValue(Api);
   const setResult = useSetRecoilState(QuizResult);
   const [next, setNext] = useState(0);
   const [score, setScore] = useState(0);
    const [timer, setTimer] = useState(15);
 
-//console.log(data)
-  //Using the Fisher-Yates algorithm
-  // function shuffleArray(array) {
-  //   console.log(array)
-  //   for (let i = array.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * (i + 1));
-  //     [array[i], array[j]] = [array[j], array[i]];
-  //   }
-  //   return array;
-  // }
   function handleCorrectAnswer(){
     if(next<9){
       setNext(next+1)
@@ -62,17 +51,17 @@ function Quizz() {
    }
  }
 
-  // useEffect(() => {
-  //   let time = setInterval(Timer, 1000);
-  //   function Timer() {
-  //     setTimer(timer - 1);
-  //     if (timer === 0) {
-  //       setTimer(15);
-  //       handleNext();
-  //     }
-  //   }
-  //   return () => clearInterval(time);
-  // });
+  useEffect(() => {
+    let time = setInterval(Timer, 1000);
+    function Timer() {
+      setTimer(timer - 1);
+      if (timer === 0) {
+        setTimer(15);
+        handleNext();
+      }
+    }
+    return () => clearInterval(time);
+  });
 
   return (
     <div className={style.container}>
