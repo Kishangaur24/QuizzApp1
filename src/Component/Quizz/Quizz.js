@@ -6,50 +6,59 @@ import style from "./Quizz.module.css";
 
 function Quizz() {
   const navigate=useNavigate()
+  // Going to infinitive loop
   const data = useRecoilValue(Api);
+  const [quizzes, setQuizzes] = useState([]);
+  const [correctAns, setCorrectAns] = useState("");
   const setResult = useSetRecoilState(QuizResult);
   const [next, setNext] = useState(0);
   const [score, setScore] = useState(0);
    const [timer, setTimer] = useState(15);
 
-  function handleCorrectAnswer(){
-    if(next<9){
-      setNext(next+1)
-      setScore(score+1)
-      setResult(score) 
-    }else{
-      setNext(9)
-      setScore(score+1)
-      setResult(score+1)
+  console.log(score);
+
+  //Using the Fisher-Yates algorithm
+  function shuffleArray(array) {
+    console.log(array)
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  useEffect(() => {
+    if (data?.length) {
+      const correct_answer = data[next]?.correct_answer;
+      setCorrectAns(correct_answer);
+      const incorrect_answers = data[next]?.incorrect_answers;
+      const allAnswers = [correct_answer, ...incorrect_answers];
+      const shuffledAnswers = shuffleArray(allAnswers);
+      setQuizzes(shuffledAnswers);
+    }
+  }, [data, next]);
+
+  function handleNext() {
+    if (next < 9) {
+      setNext((prev) => prev + 1);
+    }else if(next===9){
       navigate("/Result")
     }
-    
   }
-  
- function handleWrong(){
-  if(next<9){
-    setNext(next+1)
-  }else{
-    setNext(9)
-    navigate("/Result")
-  }
-  
- }
 
- function handleNext(){
-   if(next<9){
-    setNext(next+1)
-   }else{
-    setNext(9)
-   }
- }
- function handlePrevious(){
-   if(next>0){
-    setNext(next-1)
-   }else{
-    setNext(0)
-   }
- }
+  function handlePrevious() {
+    if (next > 0) {
+      setNext((prev) => prev - 1);
+    }
+  }
+
+  function handleQuiz(ans, correctAns) {
+    if (correctAns === ans) {
+      setResult(score)
+      setScore((prev) => prev + 1);
+      
+    }
+  }
 
   useEffect(() => {
     let time = setInterval(Timer, 1000);
@@ -58,6 +67,8 @@ function Quizz() {
       if (timer === 0) {
         setTimer(15);
         handleNext();
+      }else if(next===9){
+        navigate("/Result")
       }
     }
     return () => clearInterval(time);
@@ -73,31 +84,30 @@ function Quizz() {
       </div>
       <div className={style.form}>
         <div className={style.header}>
-          <h1>Question: {next+1} {data[next]?.question}</h1>
+          {" "}
+          <h1>Question{next+1} {data[next]?.question}</h1>
+          Correct ans - {correctAns}
         </div>
         <div className={style.option}>
-          
-            <div className={style.allOption}>
-         <li onClick={handleWrong}>{data[next].incorrect_answers[0]}</li>
-         <li onClick={handleWrong}>{data[next].incorrect_answers[1]}</li>
-         </div>
-         <div>
-         <li onClick={handleWrong}>{data[next].incorrect_answers[2]}</li>
-         <li onClick={handleCorrectAnswer}>{data[next]?.correct_answer}</li>
-         </div>
-          
+          {quizzes?.map((answer) => (
+            <li key={answer} onClick={() => handleQuiz(answer, correctAns)}>
+              {answer}
+            </li>
+          ))}
         </div>
 
         <div className={style.btn}>
-            <button className={style.btn1} onClick={handlePrevious} >
+          {next > 0 ? (
+            <button className={style.btn1} onClick={handlePrevious}>
               previous
             </button>
-        
+          ) : null}
 
+          {next < 9 ? (
             <button className={style.btn2} onClick={handleNext}>
               next
             </button>
-       
+          ) : null}
         </div>
       </div>
     </div>
