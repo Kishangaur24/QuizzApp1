@@ -20,6 +20,7 @@
     opacity: 0.9;
     border-radius: 20px;
     padding: 3rem;
+    margin-top: 8rem;
 }
 .input{
     width: 25rem;
@@ -52,21 +53,3 @@
 
 }
 
-@media (max-width:760px) {
-
-   
-  .form{
-    width: 45rem;
-    height: 40rem;
-  }
- 
-}
-@media (max-width:460px) {
-
-   
-    .form{
-     width: auto;
-     height: auto;
-    }
-   
-  }

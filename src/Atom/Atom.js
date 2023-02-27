@@ -1,7 +1,8 @@
+import { Quizz } from '../Component/Const/QuizzConst'
 import {atom} from 'recoil'
 export const Api=atom({
     key:"api",
-    default:[]
+    default:[Quizz]
 })
 
 export const QuizResult=atom({

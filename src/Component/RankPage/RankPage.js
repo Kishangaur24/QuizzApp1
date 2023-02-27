@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import style from './RankPage.module.css'
 import {  useRecoilValue} from 'recoil'
 import { UserRanking } from '../../Atom/Atom';
+import { Link } from 'react-router-dom';
 
 
 const RankPage = () => {
@@ -40,7 +41,9 @@ useEffect(()=>{
           ) }
             </tbody>
         </table>
-    
+        <div className={style.link}>
+    <Link to={"/"}><h1>Go to home page</h1></Link>
+    </div>
     </div>
   )
 }
