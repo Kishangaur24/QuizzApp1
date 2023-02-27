@@ -1,15 +1,14 @@
-import { Quizz } from '../Component/Const/QuizzConst'
-import {atom} from 'recoil'
-export const Api=atom({
-    key:"api",
-    default:[Quizz]
-})
+import { atom } from "recoil";
+export const QuestionsAtom = atom({
+  key: "questions",
+  default: [],
+});
 
-export const QuizResult=atom({
-    key:"Result",
-    default:null
-})
-export const UserRanking=atom({
-    key:"Rank",
-    default:[]
-})
+export const scoreAtom = atom({
+  key: "score",
+  default: 0,
+});
+export const UserRanking = atom({
+  key: "rank",
+  default: [],
+});

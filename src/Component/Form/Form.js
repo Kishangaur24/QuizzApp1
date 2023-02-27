@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import style from "./Form.module.css";
 import { Categories } from "../Const/Const";
 import { useNavigate } from "react-router-dom";
-import { Api } from "../../Atom/Atom";
+import { QuestionsAtom } from "../../Atom/Atom";
 import { useSetRecoilState } from "recoil";
 function Form() {
-  const setApi = useSetRecoilState(Api);
+  const setQuestions = useSetRecoilState(QuestionsAtom);
   const [option] = useState(Categories);
   const [name, setName] = useState("");
   const [category, setCategory] = useState(0);
@@ -30,7 +30,7 @@ function Form() {
     const uri = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
     const response = await fetch(uri);
     const data = await response.json();
-    setApi(data?.results);
+    setQuestions(data?.results);
     userData.unshift(newData);
     localStorage.setItem("userData", JSON.stringify(userData));
     navigate("/Quizz");
@@ -39,7 +39,7 @@ function Form() {
   return (
     <div className={style.main}>
       <form className={style.form}>
-        <h1>Quizz setting</h1>
+        <h1>Select Quiz</h1>
         <input
           required
           className={style.input}

@@ -1,115 +1,76 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { Api, QuizResult } from "../../Atom/Atom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { QuestionsAtom, scoreAtom } from "../../Atom/Atom";
 import style from "./Quizz.module.css";
 
 function Quizz() {
-  const navigate=useNavigate()
-  // Going to infinitive loop
-  const data = useRecoilValue(Api);
-  const [quizzes, setQuizzes] = useState([]);
-  const [correctAns, setCorrectAns] = useState("");
-  const setResult = useSetRecoilState(QuizResult);
-  const [next, setNext] = useState(0);
-  const [score, setScore] = useState(0);
-   const [timer, setTimer] = useState(15);
+  const questions = useRecoilValue(QuestionsAtom);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useRecoilState(scoreAtom);
+  const navigate = useNavigate();
 
-  console.log(score);
-
-  //Using the Fisher-Yates algorithm
-  function shuffleArray(array) {
-    console.log(array)
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+  const handleAnswerClick = (isCorrect) => {
+    if (isCorrect) {
+      setScore(score + 1);
     }
-    return array;
+    setCurrentQuestion(currentQuestion + 1);
+  };
+
+  //checking before destructuring whether question array have some data or not
+  if (questions.length === 0) {
+    return (
+      <div className={style.noQuestions}>
+        <h1>No questions found for the quiz!</h1>
+        <h2>
+          Please register again <Link to="/">Register</Link>.
+        </h2>
+      </div>
+    );
   }
 
-  useEffect(() => {
-    if (data?.length) {
-      const correct_answer = data[next]?.correct_answer;
-      setCorrectAns(correct_answer);
-      const incorrect_answers = data[next]?.incorrect_answers;
-      const allAnswers = [correct_answer, ...incorrect_answers];
-      const shuffledAnswers = shuffleArray(allAnswers);
-      setQuizzes(shuffledAnswers);
-    }
-  }, [data, next]);
-
-  function handleNext() {
-    if (next < 9) {
-      setNext((prev) => prev + 1);
-    }else if(next===9){
-      navigate("/Result")
-    }
+  //if current question count is greater than questions length then
+  //redirect to the result page
+  if (currentQuestion >= questions.length) {
+    return navigate("/Result");
   }
 
-  function handlePrevious() {
-    if (next > 0) {
-      setNext((prev) => prev - 1);
-    }
-  }
+  //extracting current question from array of questions based on question index
+  const currentQuestionData = questions[currentQuestion];
+  //extracting data from an current question object
+  const { question, correct_answer, incorrect_answers } = currentQuestionData;
+  //concatenating array of incorrect answers & correct answer
+  const allAnswers = [...incorrect_answers, correct_answer];
 
-  function handleQuiz(ans, correctAns) {
-    if (correctAns === ans) {
-      setResult(score)
-      setScore((prev) => prev + 1);
-      
-    }
-  }
-
-  useEffect(() => {
-    let time = setInterval(Timer, 1000);
-    function Timer() {
-      setTimer(timer - 1);
-      if (timer === 0) {
-        setTimer(15);
-        handleNext();
-      }else if(next===9){
-        navigate("/Result")
-      }
-    }
-    return () => clearInterval(time);
-  });
+  //simplest algo to shuffle an array
+  const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
 
   return (
     <div className={style.container}>
-      <div className={style.score}>
-        <h1>Score:{score}</h1>
-      </div>
-      <div className={style.timer}>
-        <h1>{timer} </h1>
+      <div className={style.questionStatus}>
+        <h3>Question {currentQuestion + 1}/10</h3>
       </div>
       <div className={style.form}>
         <div className={style.header}>
           {" "}
-          <h1>Question{next+1} {data[next]?.question}</h1>
-          Correct ans - {correctAns}
+          <h2>
+            Q {currentQuestion + 1}: {question}
+          </h2>
         </div>
         <div className={style.option}>
-          {quizzes?.map((answer) => (
-            <li key={answer} onClick={() => handleQuiz(answer, correctAns)}>
+          {shuffledAnswers?.map((answer) => (
+            <li
+              key={answer}
+              onClick={() => handleAnswerClick(answer === correct_answer)}
+            >
               {answer}
             </li>
           ))}
         </div>
-
-        <div className={style.btn}>
-          {next > 0 ? (
-            <button className={style.btn1} onClick={handlePrevious}>
-              previous
-            </button>
-          ) : null}
-
-          {next < 9 ? (
-            <button className={style.btn2} onClick={handleNext}>
-              next
-            </button>
-          ) : null}
-        </div>
       </div>
+      <span style={{ color: "white", marginTop: "10px" }}>
+        Correct Ans (Just for checking application) : {correct_answer}
+      </span>
     </div>
   );
 }

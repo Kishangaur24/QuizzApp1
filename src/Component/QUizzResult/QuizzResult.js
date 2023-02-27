@@ -1,38 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import style from "./QuizzResult.module.css";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { QuizResult, UserRanking } from "../../Atom/Atom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { scoreAtom, UserRanking } from "../../Atom/Atom";
 import { useNavigate } from "react-router-dom";
 
 const QuizzResult = (e) => {
   const setRank = useSetRecoilState(UserRanking);
   const user = JSON.parse(localStorage.getItem("userData"));
-  // console.log(user, "user");
-  const userResult = useRecoilValue(QuizResult);
-  // console.log(userResult, "QuizzResult ....");
+  const [score, setScore] = useRecoilState(scoreAtom);
   const navigate = useNavigate();
   function handleRestart() {
     navigate("/");
   }
-  
+
   // for getting rank for all user
-  function getRank(e){
-    e.preventDefault()
-    const rankScore=  JSON.parse(localStorage.getItem("userRank") || "[]")
-    const newRanker={
-      user:user[0].name,
-      userResult:userResult
-        }
-       rankScore.push(newRanker)
-      localStorage.setItem("userRank",JSON.stringify(rankScore))
+  function getRank(e) {
+    e.preventDefault();
+    const rankScore = JSON.parse(localStorage.getItem("userRank") || "[]");
+    const newRanker = {
+      user: user[0].name,
+      userResult: score,
+    };
+    rankScore.push(newRanker);
+    localStorage.setItem("userRank", JSON.stringify(rankScore));
 
-      setRank(rankScore)
-      console.log(rankScore)
-       navigate("/Rank")
-
+    setRank(rankScore);
+    setScore(0);
+    navigate("/Rank");
   }
- 
-
 
   return (
     <>
@@ -41,7 +36,7 @@ const QuizzResult = (e) => {
           <h1>Here You can see Your Result</h1>
 
           <h2>
-            {user[0].name} You Scored:{(userResult / 10) * 100}%
+            {user[0].name} You Scored:{(score / 10) * 100}%
           </h2>
 
           <div className={style.btn}>
