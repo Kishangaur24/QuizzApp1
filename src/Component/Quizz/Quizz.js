@@ -68,9 +68,9 @@ function Quizz() {
           ))}
         </div>
       </div>
-      <span style={{ color: "white", marginTop: "10px" }}>
+      {/* <span style={{ color: "white", marginTop: "10px" }}>
         Correct Ans (Just for checking application) : {correct_answer}
-      </span>
+      </span> */}
     </div>
   );
 }
