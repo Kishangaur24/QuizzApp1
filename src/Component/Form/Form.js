@@ -4,6 +4,9 @@ import { Categories } from "../Const/Const";
 import { useNavigate } from "react-router-dom";
 import { QuestionsAtom } from "../../Atom/Atom";
 import { useSetRecoilState } from "recoil";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Form() {
   const setQuestions = useSetRecoilState(QuestionsAtom);
   const [option] = useState(Categories);
@@ -24,7 +27,11 @@ function Form() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (name === "") {
-      alert("Please first fill all the required field.");
+      //alert("Please first fill all the required field.");
+      toast.error("Please first fill all the required field.",{
+        position: "top-center",
+        theme: "colored",
+      })
       return;
     }
     const uri = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
@@ -76,6 +83,7 @@ function Form() {
         <button onClick={handleSubmit} className={style.btn}>
           Start Quizz
         </button>
+        <ToastContainer />
       </form>
     </div>
   );

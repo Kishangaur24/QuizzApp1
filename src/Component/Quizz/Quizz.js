@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { QuestionsAtom, scoreAtom } from "../../Atom/Atom";
@@ -29,20 +29,18 @@ function Quizz() {
     );
   }
 
-  //if current question count is greater than questions length then
-  //redirect to the result page
   if (currentQuestion >= questions.length) {
     return navigate("/Result");
   }
 
-  //extracting current question from array of questions based on question index
   const currentQuestionData = questions[currentQuestion];
+ // console.log(currentQuestionData)
   //extracting data from an current question object
   const { question, correct_answer, incorrect_answers } = currentQuestionData;
   //concatenating array of incorrect answers & correct answer
   const allAnswers = [...incorrect_answers, correct_answer];
 
-  //simplest algo to shuffle an array
+
   const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
 
   return (
@@ -68,9 +66,6 @@ function Quizz() {
           ))}
         </div>
       </div>
-      {/* <span style={{ color: "white", marginTop: "10px" }}>
-        Correct Ans (Just for checking application) : {correct_answer}
-      </span> */}
     </div>
   );
 }
